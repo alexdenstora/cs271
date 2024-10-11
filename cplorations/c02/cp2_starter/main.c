@@ -55,9 +55,13 @@ char *welcome(char* hello, char* name) {
 
 
 	//concatenates hello with a space, name, and "!"
-	message = strcat(strcat(strcat(hello, " "), name), "!");
+	strcpy(message, hello);
+	strcat(message, " ");
+	strcat(message, name);
+	strcat(message, "!");
+	//message = strcat(strcat(strcat(hello, " "), name), "!");
 
-	return message;	
+	return message;
 }
 
 
