@@ -46,12 +46,14 @@ int main(int argc, const char *argv[]){
 		exit(EXIT_FAILURE);
 	}
 
-	while (fgets(line, sizeof(line), fin)) {
-		line_num++;
-		printf("[%04d] %s", line_num, line);
-		fprintf(fout, "%s", line);
+
+	while (fgets(line, sizeof(line), fin)) { //loops through input file line by line
+		line_num++; // increments line_num by 1 each iteration
+		printf("[%04d] %s", line_num, line); // prints line content and num to console
+		fprintf(fout, "%s", line); // writes each line to output file
 	}
 
+	//closes input & output file
 	fclose(fin);
 	fclose(fout);
 	
