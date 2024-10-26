@@ -68,13 +68,13 @@ char *strip(char *s){
  */
 void parse(FILE * file){
 	//prints if this method is successfully called
-	printf("Parsing file...\n");
+	//printf("Parsing file...\n");
 
 	// defines string line
 	char line[MAX_LINE_LENGTH] = {0};
 
 	//defines int var line_num as 0
-	unsigned int line_num = 0;
+	//unsigned int line_num = 0;
 	
 	/*
 	while loop that runs as long as the file is not NULL
@@ -84,13 +84,13 @@ void parse(FILE * file){
 	*/
 	while(fgets(line, sizeof(line), file) != NULL){
 		strip(line); //calling strip() method on line
-		line_num++; //increases line_num var to go to next line for the next loop
+		//line_num++;
 
 		// checks if the pointer reaches the end of the line
 		if(*line == '\0'){
 			continue;
 		}
-		printf("[%04d] %s\n", line_num, line);
+		printf("%s\n", line);
 
 	}
 	
