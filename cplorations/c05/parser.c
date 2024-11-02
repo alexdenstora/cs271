@@ -11,6 +11,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
+
 
 #define MAX_LINE_LENGTH 200
 
@@ -91,9 +93,15 @@ void parse(FILE * file){
 			continue;
 		}
 
-		char inst_type;
+		char inst_type = ' ';
 		if(is_Atype(line)){
-			inst_type = "A";
+			inst_type = 'A';
+		}
+		if(is_label(line)){
+			inst_type = 'L';
+		}
+		if(is_Ctype(line)){
+			inst_type = 'C';
 		}
 
 		printf("%c  %s\n", inst_type, line);
@@ -112,7 +120,7 @@ bool is_Atype(const char *line){
 }
 
 bool is_label(const char *line){
-	return line != NULL && line[0] == '(';
+	return line != NULL && line[0] == '(' && line[strlen(line) - 1] == ')';
 }
 
 bool is_Ctype(const char *line){
