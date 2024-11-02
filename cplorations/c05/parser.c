@@ -86,14 +86,18 @@ void parse(FILE * file){
 	*/
 	while(fgets(line, sizeof(line), file) != NULL){
 		strip(line); //calling strip() method on line
-		//line_num++;
+		
 
 		// checks if the pointer reaches the end of the line
 		if(*line == '\0'){
 			continue;
 		}
-
+		// declaring and initializing char var inst_type 
+		// as an empty char
 		char inst_type = ' ';
+
+		// sets inst_type char to respective type 
+		// if any of the booleans return true
 		if(is_Atype(line)){
 			inst_type = 'A';
 		}
@@ -104,14 +108,21 @@ void parse(FILE * file){
 			inst_type = 'C';
 		}
 
+		// prints char and line from file after being 
+		// stripped & assigned a type
 		printf("%c  %s\n", inst_type, line);
 
 	}
 	
 }
 
-/** Function is Address
- * 
+/*	Function is Address | is label | is c-type
+ * -----------------------------------------
+ *	Address returns true if first char of line is '@'
+ *	Label returns true if first & last char are '(' & ')'
+ *	C-Type returns true if the line is not an address or a label
+ *	
+ *	All booleans return false if line is NULL
  */
 
 bool is_Atype(const char *line){
