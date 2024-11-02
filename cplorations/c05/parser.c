@@ -81,8 +81,8 @@ void parse(FILE * file){
 	/*
 	while loop that runs as long as the file is not NULL
 	calls the strip method for each line in the file
-	then prints the line with the correct formatting and
-	line num
+	then assigns each line as an address, label, or c type function
+	finally prints the line with the correct formatting
 	*/
 	while(fgets(line, sizeof(line), file) != NULL){
 		strip(line); //calling strip() method on line
