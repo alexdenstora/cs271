@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 5 for CS 271
+ * C-ploration 6 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
@@ -12,9 +12,11 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 
 #define MAX_LINE_LENGTH 200
+#define MAX_LABEL_LENGTH MAX_LINE_LENGTH - 2
 
 
 
@@ -102,6 +104,11 @@ void parse(FILE * file){
 		}
 		if(is_label(line)){
 			inst_type = 'L';
+			char label[MAX_LABEL_LENGTH];
+			extract_label(line, label);
+			printf("%c  %s\n", inst_type, label);
+			continue;
+
 		}
 		if(is_Ctype(line)){
 			inst_type = 'C';
@@ -140,8 +147,18 @@ bool is_Ctype(const char *line){
 	return line != NULL && !is_Atype(line) && !is_label(line);
 }
 
+char *extract_label(const char *line, char *label){
+	//label = malloc(MAX_LABEL_LENGTH);
 
+	if(is_label(line)){
+		int16_t len = strlen(line) - 2;
+		strncpy(label, line + 1, len);
 
+		label[len] = '\0';
 
-
-
+		return label;
+	}
+	else {
+		return NULL;
+	}
+}

@@ -20,4 +20,4 @@ void parse(FILE * file);
 
 bool is_Atype(const char *line); // return true if address
 bool is_label(const char *line); // return true if label
-bool is_Ctype(const char *line); // return true if not an address or label
+bool is_Ctype(const char *line); // return true if not an address or a label
