@@ -3,7 +3,7 @@
 (START)
 @SCREEN
 D=A //set D to SCREEN
-@0
+@1
 M=D //set RAM0 to D 
 
 //if key is NOT pressed, jump to WHITE
@@ -20,35 +20,35 @@ D;JGT //if D > 0, jump to BLACK (key is pressed)
 
 //WHITE
 (WHITE)
-@1
+@2
 M=0 //set RAM1 to 0
 @FILL
 0;JMP //jump to FILL
 
 //BLACK
 (BLACK)
-@1
+@2
 M=-1 //set RAM1 to -1
 @FILL
 0;JMP //jump to FILL
 
 (FILL)
-@1
+@2
 D=M //setting D to stored value (-1 or 1)
 
 //get address and fill pixel w/ white or black
-@0
+@1
 A=M //set A to RAM0 (SCREEN)
 M=D //set RAM0 to D (1 or -1)
 
 //increment to next pixel, check if end of screen is reached
-@0
+@1
 D=M+1 //set D to next line of pixels
 @KBD
 D=A-D //set D to KBD - D (check if next line is end of screen)
 
 
-@0
+@1
 M=M+1 // set RAM0 to next address of next line of pixels
 A=M // set A to RAM0
 
