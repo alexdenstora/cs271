@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 6 for CS 271
+ * C-ploration 7 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
@@ -76,6 +76,10 @@ void parse(FILE * file){
 
 	// defines string line
 	char line[MAX_LINE_LENGTH] = {0};
+
+	hack_addr line_num = 0;
+
+
 	
 	/* While file is not NULL:
 	 * Strips white space and comments from each line of the file
@@ -86,6 +90,7 @@ void parse(FILE * file){
 	 * Prints the line with the correct formatting & label
 	 */
 	while(fgets(line, sizeof(line), file) != NULL){
+		line_num++;
 		strip(line); //calling strip() method on line
 		
 
@@ -106,7 +111,8 @@ void parse(FILE * file){
 			inst_type = 'L';
 			char label[MAX_LABEL_LENGTH];
 			extract_label(line, label);
-			printf("%c  %s\n", inst_type, label);
+			symtable_insert(label, line_num);
+			//printf("%c  %s\n", inst_type, label);
 			continue;
 
 		}
@@ -116,7 +122,7 @@ void parse(FILE * file){
 
 		// prints char and line from file after being 
 		// stripped & assigned a type
-		printf("%c  %s\n", inst_type, line);
+		//printf("%c  %s\n", inst_type, line);
 
 	}
 	

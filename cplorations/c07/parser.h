@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 6 for CS 271
+ * C-ploration 7 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
