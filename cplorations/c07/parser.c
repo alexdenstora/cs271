@@ -6,6 +6,7 @@
  * 
  ****************************************/
 #include "parser.h"
+#include "symtable.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -90,7 +91,7 @@ void parse(FILE * file){
 	 * Prints the line with the correct formatting & label
 	 */
 	while(fgets(line, sizeof(line), file) != NULL){
-		line_num++;
+		
 		strip(line); //calling strip() method on line
 		
 
@@ -98,15 +99,13 @@ void parse(FILE * file){
 		if(*line == '\0'){
 			continue;
 		}
+		
 		// declaring and initializing char var inst_type 
 		// as an empty char
-		char inst_type = ' ';
+		char inst_type;
 
 		// sets inst_type char to respective type 
 		// if any of the booleans return true
-		if(is_Atype(line)){
-			inst_type = 'A';
-		}
 		if(is_label(line)){
 			inst_type = 'L';
 			char label[MAX_LABEL_LENGTH];
@@ -116,9 +115,20 @@ void parse(FILE * file){
 			continue;
 
 		}
+		//line_num++;
+		if(is_Atype(line)){
+			inst_type = 'A';
+			line_num++;
+		}
+		
 		if(is_Ctype(line)){
 			inst_type = 'C';
+			line_num++;
 		}
+
+		/*if (is_Atype(line) || is_Ctype(line)) {
+            line_num++;  // Increment PC for each instruction
+        }*/
 
 		// prints char and line from file after being 
 		// stripped & assigned a type

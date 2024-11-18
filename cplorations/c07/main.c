@@ -1,11 +1,12 @@
 /****************************************
- * C-ploration 6 for CS 271
+ * C-ploration 7 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
  * 
  ****************************************/
 #include "parser.h"
+#include "symtable.h"
 
 int main(int argc, const char *argv[])
 {		
@@ -14,7 +15,7 @@ int main(int argc, const char *argv[])
 	if more or less than one, exits program
 	else, continues
 	*/
-	if(argc < 2 && argc > 0){
+	if(argc != 2){
 		printf("Usage: %s [filename]\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
@@ -36,7 +37,7 @@ int main(int argc, const char *argv[])
 
 	
 	parse(fin); //calls parse method passing in the file
-	
+	symtable_print_labels();
 	fclose(fin); //closes file when done
 			
 }
