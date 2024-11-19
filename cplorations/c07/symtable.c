@@ -8,10 +8,10 @@
 struct Symbol* hashArray[SYMBOL_TABLE_SIZE];
 
 int hash(char *str){
-	int hash = 5381;
+	unsigned long hash = 5381;
 	int c = 0;
 
-	while (c == *str++){
+	while ((c = *str++)){
 		hash = ((hash << 5) + hash) + c;
 	}
 	return hash % SYMBOL_TABLE_SIZE;
@@ -40,8 +40,19 @@ struct Symbol *symtable_find(char* key){
 
 void symtable_insert(char *key, hack_addr addr){
 	struct Symbol *item = (struct Symbol*) malloc(sizeof(struct Symbol));
+	if(item == NULL){
+		perror("Memory allocation failed for symbol");
+		exit(EXIT_FAILURE);
+	}
+
 	item -> addr = addr;
 	item -> name = strdup(key);
+
+	if (item->name == NULL) {
+        perror("Memory allocation failed for symbol name");
+        free(item);
+        exit(EXIT_FAILURE);
+    }
 
 	int hashIndex = hash(key);
 
@@ -67,11 +78,10 @@ void symtable_display_table(){
 }
 
 void symtable_print_labels(){
-	//int i = 0;
 	for(int i = 0; i < SYMBOL_TABLE_SIZE; i++){
 		if(hashArray[i] != NULL){
 			printf("{%s,%d}\n", hashArray[i]->name, hashArray[i]->addr);
 		}
-	}
+	}	
 }
 
