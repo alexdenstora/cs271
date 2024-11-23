@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 7 for CS 271
+ * C-ploration 8 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
@@ -7,17 +7,17 @@
  ****************************************/
 #include "parser.h"
 #include "symtable.h"
+#include "error.h"
 
 int main(int argc, const char *argv[])
 {		
 	/* 
-	checks number of arguments
-	if more or less than one, exits program
-	else, continues
+	if incorrect number of arguments
 	*/
 	if(argc != 2){
-		printf("Usage: %s [filename]\n", argv[0]);
-		exit(EXIT_FAILURE);
+		//printf("Usage: %s [filename]\n", argv[0]);
+		//exit(EXIT_FAILURE);
+		exit_program(EXIT_INCORRECT_ARGUMENTS, argv[0]);
 	}
 
 	/* 
@@ -31,13 +31,14 @@ int main(int argc, const char *argv[])
 	else, continues
 	*/
 	if(fin == NULL){
-		perror("Unable to open input file!");
-		exit(EXIT_FAILURE);
+		//perror("Unable to open input file!");
+		//exit(EXIT_FAILURE);
+		exit_program(EXIT_CANNOT_OPEN_FILE, argv[1]);
 	}
 
 	
 	parse(fin); //calls parse method passing in the file
-	symtable_print_labels();
+	//symtable_print_labels();
 	fclose(fin); //closes file when done
 			
 }

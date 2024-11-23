@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 7 for CS 271
+ * C-ploration 8 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
@@ -7,6 +7,7 @@
  ****************************************/
 #include "parser.h"
 #include "symtable.h"
+#include "error.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -78,7 +79,9 @@ void parse(FILE * file){
 	// defines string line
 	char line[MAX_LINE_LENGTH] = {0};
 
-	hack_addr line_num = 0;
+	//hack_addr line_num = 0;
+	unsigned int line_num = 0;
+	unsigned int inst_num = 0;
 
 
 	
@@ -91,7 +94,11 @@ void parse(FILE * file){
 	 * Prints the line with the correct formatting & label
 	 */
 	while(fgets(line, sizeof(line), file) != NULL){
-		
+		line_num++;
+		if(inst_num > MAX_INSTRUCTIONS){
+			exit_program(EXIT_TOO_MANY_INSTRUCTIONS, MAX_INSTRUCTIONS + 1);
+		}
+
 		strip(line); //calling strip() method on line
 		
 
@@ -110,7 +117,15 @@ void parse(FILE * file){
 			inst_type = 'L';
 			char label[MAX_LABEL_LENGTH];
 			extract_label(line, label);
-			symtable_insert(label, line_num);
+
+			if(!isalpha(label[0])){
+				exit_program(EXIT_INVALID_LABEL, line_num, label);
+			}
+			if(symtable_find(label) != NULL){
+				exit_program(EXIT_SYMBOL_ALREADY_EXISTS, line_num, label);
+			}
+
+			symtable_insert(label, inst_num);
 			//printf("%c  %s\n", inst_type, label);
 			continue;
 
@@ -118,13 +133,16 @@ void parse(FILE * file){
 		//line_num++;
 		if(is_Atype(line)){
 			inst_type = 'A';
-			line_num++;
+			//line_num++;
 		}
 		
 		if(is_Ctype(line)){
 			inst_type = 'C';
-			line_num++;
+			//line_num++;
 		}
+
+		printf("%u: %c  %s\n", inst_num, inst_type, line);
+		inst_num++;
 
 		/*if (is_Atype(line) || is_Ctype(line)) {
             line_num++;  // Increment PC for each instruction
@@ -133,6 +151,7 @@ void parse(FILE * file){
 		// prints char and line from file after being 
 		// stripped & assigned a type
 		//printf("%c  %s\n", inst_type, line);
+
 
 	}
 	

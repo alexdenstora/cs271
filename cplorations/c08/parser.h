@@ -1,10 +1,13 @@
 /****************************************
- * C-ploration 7 for CS 271
+ * C-ploration 8 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
  * 
  ****************************************/
+#ifndef __PARSER_H__
+#define __PARSER_H__
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -14,6 +17,9 @@
 
 #define MAX_LINE_LENGTH  200
 #define MAX_LABEL_LENGTH MAX_LINE_LENGTH - 2
+
+#define MAX_HACK_ADDRESS INT16_MAX
+#define MAX_INSTRUCTIONS MAX_HACK_ADDRESS
 
 typedef int16_t hack_addr;
 typedef int16_t opcode;
@@ -63,6 +69,7 @@ typedef struct instruction{
 	};
 }instruction;
 
+#endif
 
 
 

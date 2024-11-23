@@ -1,10 +1,12 @@
 /****************************************
- * C-ploration 7 for CS 271
+ * C-ploration 8 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
  * 
  ****************************************/
+#ifndef __SYMTABLE_H__
+#define __SYMTABLE_H__
 
 #include <stdio.h>
 #include <string.h>
@@ -26,3 +28,5 @@ struct Symbol *symtable_find(char * key);
 void symtable_insert(char *key, hack_addr addr);
 void symtable_display_table();
 void symtable_print_labels();
+
+#endif
