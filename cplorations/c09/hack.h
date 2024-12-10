@@ -1,5 +1,6 @@
 #ifndef HACK_H
 #define HACK_H
+
 #include <stdint.h>
 
 #define NUM_PREDEFINED_SYMBOLS 23

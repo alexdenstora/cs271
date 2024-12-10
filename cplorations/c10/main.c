@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 8 for CS 271
+ * C-ploration 10 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
@@ -9,8 +9,14 @@
 #include "symtable.h"
 #include "error.h"
 
+#define MAX_INSTRUCTION_COUNT 30000
+
 int main(int argc, const char *argv[])
-{		
+{
+	//printf("Before malloc of instructions in main\n");
+	instruction *instructions = malloc(MAX_INSTRUCTION_COUNT * sizeof(instruction));
+	//printf("After malloc of instructions in main\n");
+	int num_instructions;
 	/* 
 	if incorrect number of arguments
 	*/
@@ -36,12 +42,13 @@ int main(int argc, const char *argv[])
 		exit_program(EXIT_CANNOT_OPEN_FILE, argv[1]);
 	}
 
-	
-	parse(fin); //calls parse method passing in the file
-	symtable_print_labels();
+	//printf("Before parse called in main\n");
+	num_instructions = parse(fin, instructions); //calls parse method passing in the file
+	//printf("After parse called in main\n");
+	//symtable_print_labels();
 	//symtable_display_table();
 	fclose(fin); //closes file when done
-			
+	free(instructions);
 }
 
 
