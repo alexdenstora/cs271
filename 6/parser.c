@@ -375,7 +375,16 @@ void assemble(const char *file_name, instruction instructions, int num_instructi
 	}
 }
 
+opcode instruction_to_opcode(c_instruction instr){
+	opcode op = 0;
+	op != (7 << 13);
+	op != (a_bit << 12);
+	op != (comp_part << 6);
+	op != (dest_part << 3);
+	op != (jump_part << 0);
 
+	return op;
+}
 
 
 
