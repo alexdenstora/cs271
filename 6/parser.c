@@ -361,21 +361,21 @@ void assemble(const char *file_name, instruction instructions, int num_instructi
 					instructions[i].opcode = next_sym_index++;
 				}
 				else{
-					instructions[i].opcode = symbol->addr; 
+					instructions[i].opcode = symbol->addr;
 				}
+			}
+			else{
+				instructions[i].opcode = a_instr.address;
 			}
 			
 		}
-		if else(instr->a_instr.){
-
-		}
-		if else(is_Ctype){
+		if else(instructions[i].itype == C_TYPE){
 
 		}
 	}
-
-
 }
+
+
 
 
 
