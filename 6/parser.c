@@ -336,6 +336,16 @@ void parse_C_instruction(char *line, c_instruction *instr){
     //        jump_part ? jump_part : "(null)");
 }
 
+void assemble(const char *file_name, instruction instructions, int num_instructions){
+	const char *extension = ".hack";
+	int newStringLength = strlen(file_name) + strlen(extension) + 1;
+	
+	char *new_file_name = (char*)malloc(newStringLength);
+	
+	strcpy(new_file_name, file_name);
+	strcat(new_file_name, extension);
+}
+
 
 
 
