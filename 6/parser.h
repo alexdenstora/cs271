@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 10 for CS 271
+ * Project 6 for CS 271
  * 
  * [NAME] ALEXANDER SAHLSTROM
  * [TERM] FALL 2024
@@ -80,6 +80,8 @@ int parse(FILE * file, instruction *instructions);
 bool parse_A_instruction(const char *line, a_instruction *instr);
 
 void parse_C_instruction(char *line, c_instruction *instr);
+
+void assemble(const char * file_name, instruction *instructions, int num_instructions);
 
 #endif
 
