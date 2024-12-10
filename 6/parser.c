@@ -344,6 +344,37 @@ void assemble(const char *file_name, instruction instructions, int num_instructi
 	
 	strcpy(new_file_name, file_name);
 	strcat(new_file_name, extension);
+
+	int next_sym_index = 16;
+
+	for(int i = 0; i < num_instructions; i ++){
+		// if instruction is an address, check if address is a label
+		// if true, search for opcode in symtable
+		// if returns NULL, add label to symtable
+		// else, 
+		if(instructions[i].itype == A_TYPE){
+			a_instruction a_instr = instructions[i].a_instr;
+			if(!a_instr.is_addr){
+				struct Symbol *symbol = symtable_find(a_instr.label);
+				if(symbol == NULL){
+					symtable_insert(a_instr.label, next_sym_index);
+					instructions[i].opcode = next_sym_index++;
+				}
+				else{
+					instructions[i].opcode = symbol->addr; 
+				}
+			}
+			
+		}
+		if else(instr->a_instr.){
+
+		}
+		if else(is_Ctype){
+
+		}
+	}
+
+
 }
 
 
