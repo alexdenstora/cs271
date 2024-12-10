@@ -370,6 +370,7 @@ void assemble(const char *file_name, instruction instructions, int num_instructi
 			
 		}
 		if else(instructions[i].itype == C_TYPE){
+			printf("%c", OPCODE_TO_BINARY(instruction_to_opcode(instructions[i])));
 
 		}
 	}
