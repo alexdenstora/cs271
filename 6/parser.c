@@ -336,7 +336,7 @@ void parse_C_instruction(char *line, c_instruction *instr){
     //        jump_part ? jump_part : "(null)");
 }
 
-void assemble(const char *file_name, instruction instructions, int num_instructions){
+void assemble(const char *file_name, instruction *instructions, int num_instructions){
 	const char *extension = ".hack";
 	int newStringLength = strlen(file_name) + strlen(extension) + 1;
 	
@@ -369,8 +369,9 @@ void assemble(const char *file_name, instruction instructions, int num_instructi
 			}
 			
 		}
-		if else(instructions[i].itype == C_TYPE){
-			printf("%c", OPCODE_TO_BINARY(instruction_to_opcode(instructions[i])));
+		else if(instructions[i].itype == C_TYPE){
+			opcode op = instruction_to_opcode(instructions[i].c_instr);
+			printf("%c", OPCODE_TO_BINARY(op));
 
 		}
 	}
@@ -378,16 +379,11 @@ void assemble(const char *file_name, instruction instructions, int num_instructi
 
 opcode instruction_to_opcode(c_instruction instr){
 	opcode op = 0;
-	op != (7 << 13);
-	op != (a_bit << 12);
-	op != (comp_part << 6);
-	op != (dest_part << 3);
-	op != (jump_part << 0);
+	op |= (7 << 13);
+	op |= (instr.a << 12);
+	op |= (instr.comp << 6);
+	op |= (instr.dest << 3);
+	op |= (instr.jump << 0);
 
 	return op;
 }
-
-
-
-
-
