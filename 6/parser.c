@@ -180,7 +180,7 @@ int parse(FILE * file, instruction *instructions){
 			instr.itype = A_TYPE;
 
 			
-			printf("A: %s\n", line + 1/*instr.a_instr*/);
+			//printf("A: %s\n", line + 1);
 			
 		}
 		
@@ -204,7 +204,7 @@ int parse(FILE * file, instruction *instructions){
 			//END OF ERROR TESTING
 			else {
 				instr.itype = C_TYPE;
-				printf("C: d=%d, c=%d, j=%d\n", instr.c_instr.dest, instr.c_instr.comp, instr.c_instr.jump);
+				//printf("C: d=%d, c=%d, j=%d\n", instr.c_instr.dest, instr.c_instr.comp, instr.c_instr.jump);
 			}
 		}
 
@@ -269,21 +269,9 @@ char *extract_label(const char *line, char *label){
 
 
 void parse_C_instruction(char *line, c_instruction *instr){
-	//printf("starting parse_c_instruction\n");
-
-	// If line is empty or only whitespace, return early
-    /*if (line == NULL || strlen(line) == 0 || isspace(line[0])) {
-        printf("ERROR: Invalid instruction string '%s'\n", line);
-        exit_program(EXIT_INVALID_C_COMP);
-    }*/
-
 	char line_copy[MAX_LINE_LENGTH];
-	//printf("parse_C_instruction received line: '%s'\n", line);
 	strcpy(line_copy, line);
 	line_copy[MAX_LINE_LENGTH - 1] = '\0';
-	//printf("line_copy after strcpy: '%s'\n", line_copy);
-
-
 
 	// initializing fields of instruction to default
 	instr->a = 0;
@@ -299,41 +287,21 @@ void parse_C_instruction(char *line, c_instruction *instr){
 		fprintf(stderr, "ERROR: Invalid instruction string '%s'\n", line);
 		exit_program(EXIT_INVALID_C_COMP);
 	}
-	
-
 	char *dest_part = strtok(temp, "=");
 	char *comp_part = strtok(NULL, "=");
-
-	// Debugging print to see dest_part and comp_part
-	//printf("DEBUG: Before validation - dest_part='%s', comp_part='%s'\n",
-    //    dest_part ? dest_part : "(null)", comp_part ? comp_part : "(null)");
 
 	// edge case where comp_part is actually dest_part
 	if(comp_part == NULL){
 		comp_part = dest_part;
 		dest_part = NULL;
 	}
-
-	// Debugging print to confirm updated dest_part and comp_part
-	// printf("DEBUG: After handling edge case - dest_part='%s', comp_part='%s'\n",
-    //    dest_part ? dest_part : "(null)", comp_part ? comp_part : "(null)");
-
 	// setting fields in the instruction
 	int a_bit = 0;
 	instr->comp = str_to_compid(comp_part, &a_bit);
 	instr->dest = dest_part ? str_to_destid(dest_part) : DEST_NULL;
-	// Debugging print to verify the destination ID
-	//printf("DEBUG: Destination ID mapped for '%s' = %d\n",
-    //    dest_part ? dest_part : "(null)", instr->dest);
-
+	
 	instr->jump = jump_part ? str_to_jumpid(jump_part) : JMP_NULL;
 	instr->a = a_bit;
-
-	//printf("finished parse_c_instruction\n");
-	//printf("Parsed C-instruction: dest='%s', comp='%s', jump='%s'\n", 
-    //        dest_part ? dest_part : "(null)", 
-    //        comp_part ? comp_part : "(null)", 
-    //        jump_part ? jump_part : "(null)");
 }
 
 void assemble(const char *file_name, instruction *instructions, int num_instructions){
@@ -345,36 +313,44 @@ void assemble(const char *file_name, instruction *instructions, int num_instruct
 	strcpy(new_file_name, file_name);
 	strcat(new_file_name, extension);
 
+	FILE *output_file = fopen(new_file_name, "w");
+
 	int next_sym_index = 16;
 
 	for(int i = 0; i < num_instructions; i ++){
-		// if instruction is an address, check if address is a label
-		// if true, search for opcode in symtable
-		// if returns NULL, add label to symtable
-		// else, 
+		opcode op;
 		if(instructions[i].itype == A_TYPE){
 			a_instruction a_instr = instructions[i].a_instr;
+			
 			if(!a_instr.is_addr){
 				struct Symbol *symbol = symtable_find(a_instr.label);
 				if(symbol == NULL){
 					symtable_insert(a_instr.label, next_sym_index);
-					instructions[i].opcode = next_sym_index++;
+					/*instructions[i].opcode*/op = next_sym_index++;
 				}
 				else{
-					instructions[i].opcode = symbol->addr;
+					/*instructions[i].opcode*/op = symbol->addr;
 				}
 			}
-			else{
-				instructions[i].opcode = a_instr.address;
+			else if(a_instr.is_addr){
+				/*instructions[i].opcode*/op = a_instr.address;
 			}
 			
 		}
 		else if(instructions[i].itype == C_TYPE){
-			opcode op = instruction_to_opcode(instructions[i].c_instr);
-			printf("%c", OPCODE_TO_BINARY(op));
-
+			op = instruction_to_opcode(instructions[i].c_instr);
 		}
+		else{
+			continue;
+		}
+		//int opcode = OPCODE_TO_BINARY(instruction[i]);
+
+		// printf("%i", instructions[i].opcode);
+		fprintf(output_file, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",
+			OPCODE_TO_BINARY(op));
 	}
+	fclose(output_file);
+	free(new_file_name);
 }
 
 opcode instruction_to_opcode(c_instruction instr){

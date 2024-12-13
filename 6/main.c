@@ -42,12 +42,9 @@ int main(int argc, const char *argv[])
 		exit_program(EXIT_CANNOT_OPEN_FILE, argv[1]);
 	}
 
-	//printf("Before parse called in main\n");
 	num_instructions = parse(fin, instructions); //calls parse method passing in the file
-	//printf("After parse called in main\n");
-	//symtable_print_labels();
-	//symtable_display_table();
 	fclose(fin); //closes file when done
+	assemble(argv[1], instructions, num_instructions);
 	free(instructions);
 }
 
