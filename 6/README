@@ -1,0 +1,17 @@
+This is the read me file for this assembler program written by Alexander Sahlstrom for CS271.
+
+The driver program is main.c
+
+To use this assembler ensure that all header and c files are in the same folder directory. There should also be an asm folder containing .asm files. 
+
+Open a new terminal window at the folder containing the c and header files. Use this command to compile the files into .o files:
+
+make main
+
+Ignore the warnings and type this next command to run the program:
+
+./main ./asm/Add.asm
+
+This will produce a new file by the name of Add.asm.hack. This file will contain the binary code translation of Add.asm
+
+Ensure that this program is only run using hack assembly files. You can replace Add in the previous command to assemble any of the other hack assembly files into binary. 
